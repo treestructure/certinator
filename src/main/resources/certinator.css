@@ -1,0 +1,79 @@
+.root {
+    -dark: #293946;
+    -secondary: #829A9D;
+    -light: #F4F4F3;
+    -accent: #F27E43;
+    -darkaccent: #92492A;
+    -fx-font-family: Roboto;
+    -fx-font-smoothing-type: gray;
+}
+.mainPane {
+    -fx-pref-width: 500;
+    -fx-pref-height: 400;
+    -fx-background-color: -dark;
+}
+.text-field {
+    -fx-pref-width: 200;
+    -fx-text-fill: -light;
+}
+.jfx-tab-pane .tab-header-background {
+    -fx-background-color: -dark;
+}
+
+.jfx-tab-pane .headers-region > .tab > .jfx-rippler {
+    -jfx-rippler-fill: -accent;
+}
+.jfx-dialog-layout {
+    -fx-text-fill: -dark;
+    -fx-border-color: -light;
+    -fx-background-color: -secondary;
+    -fx-font-size: 14;
+    -fx-font-weight: normal;
+}
+.jfx-dialog-layout > .jfx-layout-heading {
+    -fx-alignment: center-left;
+    -fx-font-weight: BOLD;
+    -fx-padding: 24 24 20 24;
+}
+.customDialog {
+    -fx-pref-width: 300;
+    -fx-pref-height: 200;
+}
+.jfx-tab-pane .headers-region .tab-selected-line {
+    -fx-background-color: -accent;
+}
+.jfx-text-field,
+.jfx-password-field {
+    -jfx-focus-color: -accent;
+    -jfx-unfocus-color: -darkaccent;
+    -fx-padding: 0.333333em 0 0.333333em 0;
+    -fx-font-size: 14;
+}
+
+.label {
+    -fx-text-fill: -secondary;
+    -fx-fill: -secondary;
+}
+
+.mainTabPane {
+    -fx-background-color: -dark;
+}
+.defaultButton {
+    -fx-background-color: -dark;
+    -fx-border-color: -darkaccent;
+    -fx-pref-width: 200;
+    -fx-pref-height: 35;
+    -fx-font-size: 14;
+    -fx-text-fill: -light;
+}
+
+.execButton {
+    -fx-font-weight: bold;
+    -fx-background-color: -accent;
+    -fx-border-color: -accent;
+    -fx-pref-width: 200;
+    -fx-pref-height: 50;
+    -fx-font-size: 14;
+    -fx-text-fill: -light;
+}
+
