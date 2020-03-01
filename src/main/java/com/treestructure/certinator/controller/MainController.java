@@ -100,17 +100,28 @@ public class GeneratorController implements Initializable {
         try {
             if (enterPwd.getText().equals(reenterPwd.getText())) {
                 config.setDefaultTrustStorePassword(enterPwd.getText());
-                truststorebuilderService.buildTrustStoreFromPath();
+                var resultLog = truststorebuilderService.buildTrustStoreFromPath();
+
+                DialogBuilder.build(rootPane, "Truststore generation successful",
+                        String.join("\n", resultLog)).show();
             }
             else {
                 DialogBuilder.build(rootPane,
                         "Password Error", "Passwords did not match!").show();
             }
-        } catch (IOException | KeyStoreException | CertificateException | NoSuchAlgorithmException e) {
+        } catch (CertificateException | NoSuchAlgorithmException e) {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setHeaderText("Error Generating Truststore");
             errorAlert.showAndWait();
             e.printStackTrace();
+        }
+        catch (KeyStoreException e) {
+            DialogBuilder.build(rootPane, "Internal Keystore Error", "KeyStore instance could not be created");
+        }
+        catch (IOException e) {
+            DialogBuilder.build(rootPane,
+                    "Path not present",
+                    "The following path could not be found: "+ e.getMessage()).show();
         }
     }
 
@@ -134,7 +145,7 @@ public class GeneratorController implements Initializable {
             if (result) {
                 DialogBuilder.build(rootPane,
                         "Success",
-                        "Connection Established").show();
+                        "Secure connection established using the given truststore").show();
             } else {
                 DialogBuilder.build(rootPane,
                         "Error",

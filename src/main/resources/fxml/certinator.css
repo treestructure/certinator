@@ -1,4 +1,5 @@
 .root {
+    -darker: #151E2A;
     -dark: #293946;
     -secondary: #829A9D;
     -light: #F4F4F3;
@@ -6,6 +7,9 @@
     -darkaccent: #92492A;
     -fx-font-family: Roboto;
     -fx-font-smoothing-type: gray;
+    -fx-focus-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-color: none;
 }
 .mainPane {
     -fx-pref-width: 500;
@@ -24,16 +28,26 @@
     -jfx-rippler-fill: -accent;
 }
 .jfx-dialog-layout {
-    -fx-text-fill: -dark;
+    -fx-text-fill: -darkaccent;
     -fx-border-color: -light;
     -fx-background-color: -secondary;
-    -fx-font-size: 14;
     -fx-font-weight: normal;
+}
+
+.jfx-dialog-layout > .jfx-layout-body .label {
+    -fx-text-fill: -darkaccent;
+    -fx-font-size: 14;
+    -fx-wrap-text: true;
 }
 .jfx-dialog-layout > .jfx-layout-heading {
     -fx-alignment: center-left;
-    -fx-font-weight: BOLD;
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
     -fx-padding: 24 24 20 24;
+}
+.jfx-dialog-layout > .jfx-layout-body {
+    -fx-alignment: center-left;
+    -fx-font-weight: normal;
 }
 .customDialog {
     -fx-pref-width: 300;
@@ -77,3 +91,37 @@
     -fx-text-fill: -light;
 }
 
+
+.treeContainer {
+    -fx-background-color: -darker;
+    -fx-container-color: -darker;
+    -fx-max-width: 250;
+    -fx-padding-top: 20;
+}
+.tree-view,
+.projectTree {
+    -fx-background-color: transparent;
+    -fx-container-color: transparent;
+    -fx-font-size: 14;
+    -fx-border-width: 0;
+}
+
+.tree-cell {
+    -fx-background-color: -darker;
+    -fx-container-color: -darker;
+    -fx-text-fill: -light;
+    -fx-padding: 10;
+}
+.tree-cell > .tree-disclosure-node > .arrow  {
+    -fx-background-color: -light;
+}
+.tree-cell > .selection-bar {
+    -fx-background-color: -accent;
+    -fx-pref-width: 2;
+}
+.tree-cell:focused {
+    -fx-font-weight: bold;
+    -fx-background-color: -darkaccent;
+    -fx-border: none;
+    -fx-text-fill: -light;
+}

@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="rootPane" styleClass="mainPane" stylesheets="@certinator.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.treestructure.certinator.controller.GeneratorController">
+<StackPane fx:id="rootPane" prefWidth="621.0" styleClass="mainPane" stylesheets="@certinator.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.treestructure.certinator.controller.GeneratorController">
   <children>
       <JFXTabPane prefHeight="559.0" prefWidth="800.0" styleClass="mainTabPane">
          <tabs>
@@ -58,6 +58,11 @@
                         <Text layoutX="45.0" layoutY="410.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Enter Truststore Password" />
                         <Text layoutX="47.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Enter URL to check" wrappingWidth="196.9453125" />
                      </children></AnchorPane>
+                 </content>
+             </Tab>
+             <Tab text="Projects">
+                 <content>
+                    <fx:include source="projectwindow.fxml"/>
                  </content>
              </Tab>
          </tabs>

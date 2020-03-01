@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="530.0" prefWidth="550.0" stylesheets="@certinator.css"
+            xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+
+
+    <JFXTextField layoutX="40.0" layoutY="54.0" styleClass="text-field"/>
+    <Text layoutX="41.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label"
+          text="Name of Environment" wrappingWidth="210.13671875"/>
+
+    <JFXTextField layoutX="40.0" layoutY="200.0" styleClass="text-field"/>
+    <Text layoutX="40.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label"
+          text="Path to Truststore" wrappingWidth="106.13671875"/>
+
+    <JFXTextField layoutX="288.0" layoutY="205.0" styleClass="text-field"/>
+    <Text layoutX="288.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label"
+          text="Path To Trusstore in GIT" wrappingWidth="172.13671875"/>
+
+
+    <JFXButton layoutX="330.0" layoutY="460.0" styleClass="execButton" text="Save Environment"/>
+</AnchorPane>

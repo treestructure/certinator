@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox  stylesheets="@certinator.css" xmlns="http://javafx.com/javafx/10.0.2-internal"
+             xmlns:fx="http://javafx.com/fxml/1"
+             fx:controller="com.treestructure.certinator.controller.ProjectWindowController">
+   <StackPane styleClass="treeContainer">
+      <JFXTreeView fx:id="projectTree" styleClass="projectTree" >
+      </JFXTreeView>
+   </StackPane>
+   <AnchorPane fx:id="projectContent">
+
+   </AnchorPane>
+</HBox>
