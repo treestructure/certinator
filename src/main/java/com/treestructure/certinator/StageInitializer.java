@@ -17,7 +17,7 @@ import java.io.IOException;
 @Component
 public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 
-    @Value("classpath:/mainwindow.fxml")
+    @Value("classpath:/fxml/mainwindow.fxml")
     private Resource testResource;
 
     @Autowired
@@ -27,7 +27,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
     @Override
     public void onApplicationEvent(StageReadyEvent stageReadyEvent) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(testResource.getURL());
+            var fxmlLoader = new FXMLLoader(testResource.getURL());
             fxmlLoader.setControllerFactory(clazz -> context.getBean(clazz));
             Parent parent = fxmlLoader.load();
             Stage stage = stageReadyEvent.getStage();

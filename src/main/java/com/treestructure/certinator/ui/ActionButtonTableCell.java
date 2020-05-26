@@ -1,4 +1,4 @@
-package com.treestructure.certinator.controller;
+package com.treestructure.certinator.ui;
 
 
 import com.jfoenix.controls.JFXButton;
@@ -18,7 +18,7 @@ public class ActionButtonTableCell<S> extends TableCell<S, Button> {
         this.getStyleClass().add("action-button-table-cell");
 
         this.actionButton = new JFXButton(label);
-        this.actionButton.getStyleClass().add("defaultButton");
+        this.actionButton.getStyleClass().add("tableButton");
         this.actionButton.setOnAction((ActionEvent e) -> {
             function.apply(getCurrentItem());
         });

@@ -1,0 +1,14 @@
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml" spacing="10">
+    <padding>
+        <Insets bottom="30"/>
+    </padding>
+    <Text fx:id="storeLabel" styleClass="label" text="Storetable Label"/>
+    <TableView fx:id="storeTableView" editable="true" maxHeight="180" />
+    <JFXButton fx:id="addButton" styleClass="defaultButton" onAction="#addItem"
+               text="Add Button Label"/>
+</fx:root>

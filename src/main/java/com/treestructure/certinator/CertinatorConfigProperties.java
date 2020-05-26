@@ -20,4 +20,5 @@ public class CertinatorConfigProperties {
     private String truststorePath;
     private String defaultTrustStorePassword;
     private String certificateInputPath;
+    private Integer directoryDepth;
 }

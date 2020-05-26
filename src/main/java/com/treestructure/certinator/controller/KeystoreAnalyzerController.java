@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 @Component
-public class KeystoreWindowController implements Initializable {
+public class KeystoreAnalyzerController implements Initializable {
 
     @FXML
     JFXPasswordField keyStorePwd;
@@ -76,9 +76,11 @@ public class KeystoreWindowController implements Initializable {
             var model = new KeyStoreTableModel();
             try {
                 var issuer = new LdapName(v.getIssuerDN().toString());
-                var issuerName = issuer.getRdns().stream().filter(r -> r.getType().equals("CN")).findFirst().orElse(null);
+                issuer.getRdns().stream().filter(r -> r.getType().equals("CN")).findFirst().ifPresent(issuerName -> {
+                    model.setAuthority(new SimpleStringProperty(issuerName.getValue().toString()));
+                });
+
                 model.setAlias(new SimpleStringProperty(k));
-                model.setAuthority(new SimpleStringProperty(issuerName.getValue().toString()));
                 model.setType(new SimpleStringProperty( v.getType()));
                 model.setExpiary(new SimpleStringProperty(v.getNotAfter().toString()));
                 keyStoreData.add(model);

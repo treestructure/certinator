@@ -1,6 +1,6 @@
 package com.treestructure.certinator.model.ui;
 
-import com.treestructure.certinator.model.KeyStore;
+import com.treestructure.certinator.model.PasswordStore;
 import javafx.beans.property.StringProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,11 +11,10 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
-public class StoreTableComponentModel {
-
+public class PasswordStoreComponentModel {
     private StringProperty serverPath;
     private StringProperty gitPath;
     private StringProperty name;
     private StringProperty password;
-    private KeyStore originalModel;
+    private PasswordStore originalModel;
 }

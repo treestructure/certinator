@@ -1,4 +1,4 @@
-package com.treestructure.certinator.controller;
+package com.treestructure.certinator.ui;
 
 
 import com.jfoenix.controls.JFXTreeTableColumn;

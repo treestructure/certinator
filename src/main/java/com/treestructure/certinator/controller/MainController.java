@@ -25,7 +25,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 @Component
-public class GeneratorController implements Initializable {
+public class MainController implements Initializable {
 
     @Autowired
     CertinatorConfigProperties config;
@@ -66,18 +66,22 @@ public class GeneratorController implements Initializable {
 
     Stage stage;
 
+    @Autowired
+    ViewState viewState;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         inputPath.setText(config.getCertificateInputPath());
         outputPath.setText(config.getTruststorePath());
         checkPath.setText("");
         targetUrlField.setText("https://");
+        this.viewState.setMainStage(this.stage);
     }
 
     public void chooseInputFolder() {
         stage = (Stage) rootPane.getScene().getWindow();
         chooser.setTitle("Choose Source Path for certificates to build truststore");
-        Optional.ofNullable(chooser.showDialog(stage)).ifPresent(selectedPath -> {
+        Optional.ofNullable(chooser.showDialog(null)).ifPresent(selectedPath -> {
             if (selectedPath.isDirectory()) {
                 config.setCertificateInputPath(selectedPath.toString());
                 inputPath.setText(selectedPath.toString());
@@ -90,7 +94,7 @@ public class GeneratorController implements Initializable {
         FileChooser outputChooser = new FileChooser();
         outputChooser.setTitle("Choose Destination Path for the truststore");
 
-        Optional.ofNullable(outputChooser.showSaveDialog(stage)).ifPresent(selectedPath -> {
+        Optional.ofNullable(outputChooser.showSaveDialog(null)).ifPresent(selectedPath -> {
             config.setTruststorePath(selectedPath.toString());
             outputPath.setText(selectedPath.toString());
         });
@@ -157,11 +161,11 @@ public class GeneratorController implements Initializable {
     }
 
     public void chooseTrustStoreForCheck() {
-        stage = (Stage) rootPane.getScene().getWindow();
+
         FileChooser outputChooser = new FileChooser();
         outputChooser.setTitle("Choose Destination Path for the truststore");
 
-        Optional.ofNullable(outputChooser.showOpenDialog(stage)).ifPresent(selectedPath -> {
+        Optional.ofNullable(outputChooser.showOpenDialog(null)).ifPresent(selectedPath -> {
             checkPath.setText(selectedPath.toString());
             this.trustStorePathForCheck = selectedPath.toString();
         });

@@ -1,4 +1,6 @@
 package com.treestructure.certinator.model;
 
-public class ProjectModelType {
+public enum ProjectModelType {
+    PROJECT,
+    ENVIRONMENT
 }

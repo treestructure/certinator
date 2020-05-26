@@ -2,15 +2,28 @@
 
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<BorderPane fx:id="rootPane" stylesheets="@certinator.css" xmlns="http://javafx.com/javafx/10.0.2-internal"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.treestructure.certinator.controller.ProjectController">
+    <left>
+        <VBox styleClass="treeContainer">
+            <JFXTreeView fx:id="projectTree" styleClass="projectTree">
+            </JFXTreeView>
+            <HBox>
+                <padding>
+                    <Insets left="10" top="10" bottom="10"/>
+                </padding>
+                <FontAwesomeIcon glyphName="PLUS_SQUARE" styleClass="addIcon" size="40" onMouseClicked="#addProject"/>
+            </HBox>
 
-<HBox  stylesheets="@certinator.css" xmlns="http://javafx.com/javafx/10.0.2-internal"
-             xmlns:fx="http://javafx.com/fxml/1"
-             fx:controller="com.treestructure.certinator.controller.ProjectWindowController">
-   <StackPane styleClass="treeContainer">
-      <JFXTreeView fx:id="projectTree" styleClass="projectTree" >
-      </JFXTreeView>
-   </StackPane>
-   <AnchorPane fx:id="projectContent">
+        </VBox>
+    </left>
+    <center>
+        <VBox fx:id="formContainer">
 
-   </AnchorPane>
-</HBox>
+        </VBox>
+    </center>
+</BorderPane>
+

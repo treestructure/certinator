@@ -1,6 +1,7 @@
-package com.treestructure.certinator.model;
+package com.treestructure.certinator.model.ui;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import com.treestructure.certinator.model.ProjectModelType;
 import javafx.beans.property.StringProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

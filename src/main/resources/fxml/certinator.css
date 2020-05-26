@@ -63,7 +63,6 @@
     -fx-padding: 0.333333em 0 0.333333em 0;
     -fx-font-size: 14;
 }
-
 .label {
     -fx-text-fill: -secondary;
     -fx-fill: -secondary;
@@ -80,7 +79,14 @@
     -fx-font-size: 14;
     -fx-text-fill: -light;
 }
-
+.tableButton {
+    -fx-background-color: -darkaccent;
+    -fx-border-color: -darkaccent;
+    -fx-text-fill: -light;
+    -fx-font-size: 14;
+    -fx-pref-width: 100;
+    -fx-pref-height: 20;
+}
 .execButton {
     -fx-font-weight: bold;
     -fx-background-color: -accent;
@@ -96,21 +102,21 @@
     -fx-background-color: -darker;
     -fx-container-color: -darker;
     -fx-max-width: 250;
-    -fx-padding-top: 20;
 }
 .tree-view,
 .projectTree {
     -fx-background-color: transparent;
     -fx-container-color: transparent;
-    -fx-font-size: 14;
     -fx-border-width: 0;
 }
 
 .tree-cell {
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
     -fx-background-color: -darker;
     -fx-container-color: -darker;
-    -fx-text-fill: -light;
-    -fx-padding: 10;
+    -fx-text-fill: -secondary;
+    -fx-padding: 5;
 }
 .tree-cell > .tree-disclosure-node > .arrow  {
     -fx-background-color: -light;
@@ -120,8 +126,21 @@
     -fx-pref-width: 2;
 }
 .tree-cell:focused {
-    -fx-font-weight: bold;
     -fx-background-color: -darkaccent;
     -fx-border: none;
     -fx-text-fill: -light;
 }
+.text-field-table-cell .text-field {
+    -fx-background-color: -darkaccent;
+    -fx-text-fill: white;
+}
+.addIcon {
+    -fx-font-size: 40;
+    -fx-icons-color: -accent;
+    -fx-fill: -accent;
+}
+
+.addIcon:hover {
+    -fx-fill: -darkaccent;
+}
+

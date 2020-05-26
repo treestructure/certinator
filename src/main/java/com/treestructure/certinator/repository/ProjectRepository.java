@@ -1,4 +1,14 @@
 package com.treestructure.certinator.repository;
 
-public class ProjectRepository {
+import com.treestructure.certinator.model.Project;
+import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
+
+public interface ProjectRepository extends CrudRepository<Project, Long> {
+
+
+    List<Project> findByName(String name);
+
+
 }

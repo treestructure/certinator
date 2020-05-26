@@ -1,3 +1,5 @@
+certinator.db.trace.db
+certinator.db.mv.db
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
