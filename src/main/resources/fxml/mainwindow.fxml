@@ -79,10 +79,6 @@
                 <Tab text="Keystore Analyzer">
                     <fx:include source="keystorewindow.fxml"/>
                 </Tab>
-
-                <Tab text="Passwordstore Editor">
-                    <fx:include source="pwdstoreeditor.fxml"/>
-                </Tab>
             </tabs>
         </JFXTabPane>
     </children>

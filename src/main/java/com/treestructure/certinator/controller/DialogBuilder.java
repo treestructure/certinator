@@ -4,6 +4,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
+import com.treestructure.certinator.service.PasswordStoreService;
+import com.treestructure.certinator.ui.PasswordStoreEditor;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -19,6 +21,9 @@ public class DialogBuilder {
 
     @Autowired
     private ApplicationContext context;
+
+    @Autowired
+    PasswordStoreService passwordStoreService;
 
     public static JFXDialog build(StackPane pane, String heading, String text) {
         var content = new JFXDialogLayout();
@@ -49,6 +54,21 @@ public class DialogBuilder {
         var button = new JFXButton("Close");
         button.setOnAction(event -> dialog.close());
         content.setActions(button);
+        return dialog;
+    }
+
+    public JFXDialog buildPwdStoreDialog(StackPane pane, String path, String password) {
+
+        var pwdStoreEditor = new PasswordStoreEditor(passwordStoreService, path, password);
+        var content = new JFXDialogLayout();
+
+        content.setBody(pwdStoreEditor);
+        var dialog = new JFXDialog(pane, content,JFXDialog.DialogTransition.CENTER);
+
+        var button=new JFXButton("Close");
+        button.setOnAction(event -> dialog.close());
+        content.setActions(button);
+
         return dialog;
     }
 

@@ -129,7 +129,7 @@ public class EnvironmentFormController implements Initializable {
                 });
             });
             passwordStoreTable.passwordStoreOpened().subscribe(item -> {
-                var pwdEditorDialog = dialogBuilder.buildTemplateDialog(mainPane, "test", pwsTemplateResource);
+                var pwdEditorDialog = dialogBuilder.buildPwdStoreDialog(mainPane, item.getGitPath().getValue(), item.getPassword().getValue());
                 pwdEditorDialog.show();
             });
 

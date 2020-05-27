@@ -53,6 +53,11 @@
     -fx-pref-width: 300;
     -fx-pref-height: 200;
 }
+
+.pwdStoreDialog {
+    -fx-pref-width: 800;
+    -fx-pref-height: 600;
+}
 .jfx-tab-pane .headers-region .tab-selected-line {
     -fx-background-color: -accent;
 }
