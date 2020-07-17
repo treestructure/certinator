@@ -28,9 +28,8 @@
     -jfx-rippler-fill: -accent;
 }
 .jfx-dialog-layout {
-    -fx-text-fill: -darkaccent;
-    -fx-border-color: -light;
-    -fx-background-color: -secondary;
+    -fx-text-fill: -light;
+    -fx-background-color: -dark;
     -fx-font-weight: normal;
 }
 
@@ -53,8 +52,8 @@
     -fx-pref-width: 300;
     -fx-pref-height: 200;
 }
-
-.pwdStoreDialog {
+.pwdStoreDialog,
+.pwdStoreDialog .jfx-dialog-layout {
     -fx-pref-width: 800;
     -fx-pref-height: 600;
 }

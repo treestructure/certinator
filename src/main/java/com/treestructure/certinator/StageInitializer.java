@@ -32,7 +32,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
             Parent parent = fxmlLoader.load();
             Stage stage = stageReadyEvent.getStage();
 
-            stage.setScene(new Scene(parent, 800, 600));
+            stage.setScene(new Scene(parent, 1350, 900));
             stage.setTitle("::::: Certinator ::::::");
             stage.show();
         } catch (IOException e) {

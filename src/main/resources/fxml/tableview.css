@@ -70,7 +70,10 @@
 .table-view .menu-item .label {
     -fx-padding: 5 0 5 0;
 }
-
+.tableLabel {
+    -fx-font-size: 12pt;
+    -fx-fill: -light;
+}
 .tableIcon {
     -fx-fill: -light;
 }

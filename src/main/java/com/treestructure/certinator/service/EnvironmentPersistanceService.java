@@ -67,6 +67,7 @@ public class EnvironmentPersistanceService {
                     var domain = new Domain();
                     domain.setName(viewModel.getName().get());
                     domain.setUrl(viewModel.getUrl().get());
+
                     domain.setEnvironment(environment);
                     environment.getDomains().add(domain);
                     var savedResult = domainRepository.save(domain);
@@ -76,19 +77,20 @@ public class EnvironmentPersistanceService {
     public void storePasswordStoreViewModel(Environment environment, PasswordStoreComponentModel viewModel) {
         Optional.ofNullable(viewModel.getOriginalModel())
                 .ifPresentOrElse(originalModel -> {
+                    originalModel.setName(viewModel.getName().get());
+                    originalModel.setPassword(viewModel.getPassword().get());
                     originalModel.setServerPath(viewModel.getServerPath().get());
                     originalModel.setGitPath(viewModel.getGitPath().get());
-                    originalModel.setPassword(viewModel.getPassword().get());
                     passwordStoreRepository.save(originalModel);
                 }, () -> {
-                    var newKs = new PasswordStore();
-                    newKs.setGitPath(viewModel.getGitPath().get());
-                    newKs.setServerPath(viewModel.getServerPath().get());
-                    newKs.setPassword(viewModel.getPassword().get());
-                    newKs.setEnvironment(environment);
-                    environment.getPasswordStores().add(newKs);
-
-                    var savedResult = passwordStoreRepository.save(newKs);
+                    var newPwdStore = new PasswordStore();
+                    newPwdStore.setName(viewModel.getName().get());
+                    newPwdStore.setGitPath(viewModel.getGitPath().get());
+                    newPwdStore.setServerPath(viewModel.getServerPath().get());
+                    newPwdStore.setPassword(viewModel.getPassword().get());
+                    newPwdStore.setEnvironment(environment);
+                    environment.getPasswordStores().add(newPwdStore);
+                    var savedResult = passwordStoreRepository.save(newPwdStore);
                     viewModel.setOriginalModel(savedResult);
                 });
     }
@@ -106,11 +108,13 @@ public class EnvironmentPersistanceService {
     }
 
     public List<PasswordStoreComponentModel> getPasswordStoreModels(Environment environment) {
-        return environment.getPasswordStores().stream().map(ks -> PasswordStoreComponentModel
+        return environment.getPasswordStores().stream().map(pwsStore -> PasswordStoreComponentModel
                 .builder()
-                .gitPath(new SimpleStringProperty(ks.getGitPath()))
-                .password(new SimpleStringProperty(ks.getPassword()))
-                .serverPath(new SimpleStringProperty(ks.getServerPath()))
+                .name(new SimpleStringProperty(pwsStore.getName()))
+                .gitPath(new SimpleStringProperty(pwsStore.getGitPath()))
+                .password(new SimpleStringProperty(pwsStore.getPassword()))
+                .serverPath(new SimpleStringProperty(pwsStore.getServerPath()))
+                .originalModel(pwsStore)
                 .build())
                 .collect(Collectors.toList());
     }
@@ -128,7 +132,7 @@ public class EnvironmentPersistanceService {
 
 
     public void deleteKeyStore(StoreTableComponentModel viewModel) {
-        keyStoreRepository.delete(viewModel.getOriginalModel());
+        keyStoreRepository.deleteById(viewModel.getOriginalModel().getId());
     }
 
     public void deleteDomain(DomainTableComponentModel viewModel) {

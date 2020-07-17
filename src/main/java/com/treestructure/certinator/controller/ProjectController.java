@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -46,12 +45,11 @@ public class ProjectController implements Initializable {
 
     @FXML
     JFXTreeView projectTree;
-
     @FXML
     BorderPane rootPane;
-
     @FXML
     VBox formContainer;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -118,7 +116,7 @@ public class ProjectController implements Initializable {
         try {
             var fxmlLoader = new FXMLLoader(projectFormResource.getURL());
             fxmlLoader.setControllerFactory(clazz -> context.getBean(clazz));
-            AnchorPane root = fxmlLoader.load();
+            StackPane root = fxmlLoader.load();
             formContainer.getChildren().clear();
             formContainer.getChildren().add(root);
             viewState.getSelectedProject().onNext(project);

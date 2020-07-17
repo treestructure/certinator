@@ -63,9 +63,10 @@ public class DialogBuilder {
         var content = new JFXDialogLayout();
 
         content.setBody(pwdStoreEditor);
-        var dialog = new JFXDialog(pane, content,JFXDialog.DialogTransition.CENTER);
+        var dialog = new JFXDialog(pane, content,JFXDialog.DialogTransition.TOP);
+        dialog.getStyleClass().add("pwdStoreDialog");
 
-        var button=new JFXButton("Close");
+        var button=new JFXButton("X");
         button.setOnAction(event -> dialog.close());
         content.setActions(button);
 

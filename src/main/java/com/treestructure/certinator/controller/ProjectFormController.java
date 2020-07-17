@@ -3,10 +3,13 @@ package com.treestructure.certinator.controller;
 import com.jfoenix.controls.JFXTextField;
 import com.treestructure.certinator.model.Project;
 import com.treestructure.certinator.repository.ProjectRepository;
+import com.treestructure.certinator.service.ProjectPersistanceService;
+import com.treestructure.certinator.ui.EnvironmentTable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -14,29 +17,23 @@ import java.util.ResourceBundle;
 
 
 @Component
+@Slf4j
+@RequiredArgsConstructor
 public class ProjectFormController implements Initializable {
 
     private Project selectedProject;
     
     @FXML
     JFXTextField projectNameField;
-
-    @Autowired
-    ProjectRepository repository;
-
-    @Autowired
-    ViewState viewState;
-
-    ProjectFormController(@Autowired ViewState viewState, @Autowired ProjectRepository projectRepository) {
-        this.repository = projectRepository;
-        this.viewState = viewState;
-        this.viewState.getSelectedProject().subscribe(project -> {
-            this.selectedProject = project;
-            this.projectNameField.setText(project.getName());
-        });
-    }
+    @FXML
+    EnvironmentTable environmentTable;
 
 
+    private final ProjectRepository repository;
+
+    private final ProjectPersistanceService projectPersistanceService;
+
+    private final ViewState viewState;
 
     public void chooseGitRoot(ActionEvent actionEvent) {
 
@@ -49,9 +46,21 @@ public class ProjectFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.viewState.getSelectedProject().subscribe(project -> {
+            this.selectedProject = project;
+            this.projectNameField.setText(project.getName());
+        });
+
+
         viewState.getSelectedProject().subscribe(project -> {
             this.selectedProject = project;
             this.projectNameField.setText(project.getName());
+
+            environmentTable.storeData.setAll(projectPersistanceService.getEnvironmentViewModels(project));
+
+            environmentTable.deleted().subscribe(viewModel -> projectPersistanceService.deleteEnvironment(viewModel));
+            environmentTable.saved().subscribe(domainModel ->
+                    projectPersistanceService.storeEnvironmentFromViewModel(project, domainModel));
         });
     }
 

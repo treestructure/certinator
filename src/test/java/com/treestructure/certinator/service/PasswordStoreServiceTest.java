@@ -10,7 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 @Slf4j
 class PasswordStoreServiceTest {
-
+    
     @InjectMocks
     PasswordStoreService service;
 

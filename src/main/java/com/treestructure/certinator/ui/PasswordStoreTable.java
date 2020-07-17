@@ -1,10 +1,10 @@
 package com.treestructure.certinator.ui;
 
 import com.treestructure.certinator.model.ui.PasswordStoreComponentModel;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.TextFieldTableCell;
 
@@ -37,35 +37,39 @@ public class PasswordStoreTable extends CrudTable<PasswordStoreComponentModel>{
 
         var passwordColumn = new TableColumn<PasswordStoreComponentModel, String>("Password");
         passwordColumn.setCellValueFactory(data -> data.getValue().getPassword());
-        passwordColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        passwordColumn.setCellFactory(PasswordFieldTableCell.forTableColumn());
         passwordColumn.setOnEditCommit(
                 t -> {
                     t.getTableView().getItems().get(
                             t.getTablePosition().getRow()).getPassword().set(t.getNewValue());
                 });
 
-        var gitPathColumn = new TableColumn<PasswordStoreComponentModel, Button>(" ");
-        gitPathColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Git Path", p -> {
+        var gitPathColumn = new TableColumn<PasswordStoreComponentModel, FontAwesomeIcon>("Set Git Path");
+        gitPathColumn.setCellFactory(ActionIconTableCell.forTableColumn("FOLDER_OPEN", p -> {
             selectGitPathItem.onNext(p);
             return p;
         }));
 
-
-        var serverPathColumn = new TableColumn<PasswordStoreComponentModel, Button>(" ");
-        serverPathColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Server Path", p -> {
+        var serverPathColumn = new TableColumn<PasswordStoreComponentModel, FontAwesomeIcon>("Set Server Path");
+        serverPathColumn.setCellFactory(ActionIconTableCell.forTableColumn("FOLDER_OPEN", p -> {
             selectServerPathItem.onNext(p);
             return p;
         }));
 
-        var openColumn = new TableColumn<PasswordStoreComponentModel, Button>(" ");
-        openColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Open", p -> {
+        var openColumn = new TableColumn<PasswordStoreComponentModel, FontAwesomeIcon>("Edit Store");
+        openColumn.setCellFactory(ActionIconTableCell.forTableColumn("EDIT", p -> {
             openPassWordStoreItem.onNext(p);
             return p;
         }));
 
-        storeTableView.getColumns().addAll(0, List.of(nameColumn, passwordColumn, gitPathStringColumn,
-                serverPathStringColumn, gitPathColumn, serverPathColumn, openColumn));
-
+        storeTableView.getColumns().addAll(0, List.of(
+                nameColumn,
+                passwordColumn,
+                gitPathStringColumn,
+                gitPathColumn,
+                serverPathStringColumn,
+                serverPathColumn,
+                openColumn));
         storeTableView.setItems(storeData);
     }
 

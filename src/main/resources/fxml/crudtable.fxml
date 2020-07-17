@@ -7,8 +7,8 @@
     <padding>
         <Insets bottom="30"/>
     </padding>
-    <Text fx:id="storeLabel" styleClass="label" text="Storetable Label"/>
-    <TableView fx:id="storeTableView" editable="true" maxHeight="180" />
+    <Text fx:id="storeLabel" styleClass="tableLabel" text="Storetable Label"/>
+    <TableView fx:id="storeTableView" editable="true" />
     <JFXButton fx:id="addButton" styleClass="defaultButton" onAction="#addItem"
                text="Add Button Label"/>
 </fx:root>

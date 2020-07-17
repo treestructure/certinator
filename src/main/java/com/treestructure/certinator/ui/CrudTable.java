@@ -80,4 +80,11 @@ public class CrudTable<T> extends VBox {
     public final String getButtonLabel() {
         return addButton.textProperty().get();
     }
+
+    public final void setTableHeight(Double height) {
+        storeTableView.minHeightProperty().set(height);
+    }
+    public final Double getTableHeight() {
+        return storeTableView.minHeightProperty().get();
+    }
 }

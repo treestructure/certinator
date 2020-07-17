@@ -25,7 +25,7 @@ public class Environment {
 
     private String name;
     private String gitRootPath;
-    private String trustRootPath;
+    private String serverPath;
 
     @ManyToOne
     @JoinColumn(name="project_id", nullable = false)
