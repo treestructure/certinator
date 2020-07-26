@@ -5,6 +5,7 @@ import com.treestructure.certinator.model.Environment;
 import com.treestructure.certinator.repository.EnvironmentRepository;
 import com.treestructure.certinator.service.EnvironmentPersistanceService;
 import com.treestructure.certinator.service.KeyStoreAnalyzerService;
+import com.treestructure.certinator.service.ProjectTreeService;
 import com.treestructure.certinator.service.TruststoreCheckService;
 import com.treestructure.certinator.ui.DomainTable;
 import com.treestructure.certinator.ui.KeyStoreTable;
@@ -57,6 +58,8 @@ public class EnvironmentFormController implements Initializable {
     private final EnvironmentPersistanceService environmentPersistanceService;
 
     private final TruststoreCheckService trustStoreCheckService;
+
+    private final ProjectTreeService projectTreeService;
 
 
 
@@ -122,14 +125,15 @@ public class EnvironmentFormController implements Initializable {
             var pwdEditorDialog = dialogBuilder.buildPwdStoreDialog(mainPane, item.getGitPath().getValue(), item.getPassword().getValue());
             pwdEditorDialog.show();
         });
-        passwordStoreTable.deleted().subscribe(viewModel -> environmentPersistanceService.deletePasswordStore(viewModel));
+        passwordStoreTable.deleted().subscribe(viewModel -> {
+            environmentPersistanceService.deletePasswordStore(viewModel);
+        });
         passwordStoreTable.saved().subscribe(domainModel ->
                 environmentPersistanceService.storePasswordStoreViewModel(selectedEnvironment.getValue(), domainModel));
     }
 
     /**
      *
-     * @param environment
      * @param selectedEnvironment
      */
     private void bindKeyStoreTable(BehaviorSubject<Environment> selectedEnvironment) {
@@ -165,5 +169,6 @@ public class EnvironmentFormController implements Initializable {
 
     public void saveEnvironment() {
         this.environmentRepository.save(this.viewState.getSelectedEnvironment().getValue());
+        projectTreeService.renameSelected(envNameField.getText());
     }
 }

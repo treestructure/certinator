@@ -3,11 +3,9 @@ package com.treestructure.certinator.controller;
 import com.jfoenix.controls.JFXTreeView;
 import com.treestructure.certinator.model.Environment;
 import com.treestructure.certinator.model.Project;
-import com.treestructure.certinator.model.ProjectModelType;
 import com.treestructure.certinator.model.ui.ProjectTreeModel;
 import com.treestructure.certinator.repository.ProjectRepository;
-import com.treestructure.certinator.ui.TreeViewBuilder;
-import javafx.beans.property.SimpleStringProperty;
+import com.treestructure.certinator.service.ProjectTreeService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -41,8 +39,10 @@ public class ProjectController implements Initializable {
     ViewState viewState;
 
     @Autowired
-    ProjectRepository projectRepository;
+    ProjectTreeService projectTreeService;
 
+    @Autowired
+    ProjectRepository projectRepository;
     @FXML
     JFXTreeView projectTree;
     @FXML
@@ -54,88 +54,66 @@ public class ProjectController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        var root = new TreeItem<ProjectTreeModel>();
-
-        projectRepository.findAll().forEach(proj -> {
-            // add project
-            var projNode = TreeViewBuilder.buildTreeItem(ProjectTreeModel
-                    .builder()
-                    .displayName(new SimpleStringProperty(proj.getName()))
-                    .type(ProjectModelType.PROJECT)
-                    .originalModel(proj)
-                    .build(), root);
-
-            // add environments for each projects
-            proj.getEnvironments().forEach(env -> {
-                TreeViewBuilder.buildTreeItem(ProjectTreeModel
-                        .builder()
-                        .displayName(new SimpleStringProperty(env.getName()))
-                        .type(ProjectModelType.ENVIRONMENT)
-                        .originalModel(env)
-                        .build(), projNode);
-            });
-        });
+        projectTreeService.setJfxTree(projectTree);
+        projectTreeService.reload();
 
         rootPane.heightProperty().addListener((o, old, newval) -> {
             projectTree.setPrefHeight(newval.doubleValue() - 80.0);
         });
 
-        projectTree.setRoot(root);
         projectTree
-                .getSelectionModel()
-                .selectedItemProperty()
-                .addListener((obs, oldItem, newItem) -> {
-                    var model = (TreeItem<ProjectTreeModel>) newItem;
-                    updateProjectContent(model.getValue());
-                });
-        projectTree.setShowRoot(false);
-
+            .getSelectionModel()
+            .selectedItemProperty()
+            .addListener((obs, oldItem, newItem) -> {
+                updateProjectContent( (TreeItem<ProjectTreeModel>) newItem);
+            });
     }
 
-    private void updateProjectContent(ProjectTreeModel newItem) {
-
-        switch (newItem.getType()) {
+    private void updateProjectContent(TreeItem<ProjectTreeModel> newItem) {
+        projectTreeService.getSelectedTreeItem().onNext(newItem);
+        switch (newItem.getValue().getType()) {
             case ENVIRONMENT:
-                loadContentForEnvironment((Environment) newItem.getOriginalModel());
+                loadContentForEnvironment(newItem.getValue());
                 break;
             case PROJECT:
-                loadContentForProject((Project) newItem.getOriginalModel());
+                loadContentForProject(newItem.getValue());
                 break;
             default:
 
         }
-
+        projectTree.refresh();
     }
 
 
     /**
      *
-     * @param project
+     * @param treeModel
      */
-    private void loadContentForProject(Project project) {
+    private void loadContentForProject(ProjectTreeModel treeModel) {
         try {
             var fxmlLoader = new FXMLLoader(projectFormResource.getURL());
             fxmlLoader.setControllerFactory(clazz -> context.getBean(clazz));
             StackPane root = fxmlLoader.load();
             formContainer.getChildren().clear();
             formContainer.getChildren().add(root);
-            viewState.getSelectedProject().onNext(project);
+            viewState.getSelectedProject().onNext((Project)treeModel.getOriginalModel());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * @param environment
+     * @param treeModel
      */
-    private void loadContentForEnvironment(Environment environment) {
+    private void loadContentForEnvironment(ProjectTreeModel treeModel) {
         try {
             var fxmlLoader = new FXMLLoader(environmentResource.getURL());
             fxmlLoader.setControllerFactory(clazz -> context.getBean(clazz));
             StackPane root = fxmlLoader.load();
             formContainer.getChildren().clear();
             formContainer.getChildren().add(root);
-            viewState.getSelectedEnvironment().onNext(environment);
+            viewState.getSelectedEnvironment().onNext((Environment) treeModel.getOriginalModel());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -145,15 +123,6 @@ public class ProjectController implements Initializable {
      * handles click on add project button
      */
     public void addProject() {
-
-        var dummyProject = new Project();
-        dummyProject.setName("New Project");
-        var dummyToAdd = new TreeItem<ProjectTreeModel>();
-        dummyToAdd.setValue(ProjectTreeModel.builder()
-                .displayName(new SimpleStringProperty("New Project"))
-                .type(ProjectModelType.PROJECT)
-                .originalModel(dummyProject)
-                .build());
-        this.projectTree.getRoot().getChildren().add(dummyToAdd);
+        this.projectTreeService.addProjectToTree();
     }
 }

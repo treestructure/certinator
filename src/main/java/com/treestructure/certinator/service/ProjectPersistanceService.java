@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleStringProperty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,14 +23,15 @@ public class ProjectPersistanceService {
 
     private final EnvironmentRepository environmentRepository;
 
-    public void storeEnvironmentFromViewModel(Project project, EnvironmentTableComponentModel viewModel) {
-        Optional.ofNullable(viewModel.getOriginalModel())
-                .ifPresentOrElse(originalModel -> {
+    public Environment storeEnvironmentFromViewModel(Project project, EnvironmentTableComponentModel viewModel) {
+        return Optional.ofNullable(viewModel.getOriginalModel())
+                .map(originalModel -> {
                     originalModel.setName(viewModel.getName().get());
                     originalModel.setGitRootPath(viewModel.getGitRootPath().get());
                     originalModel.setServerPath(viewModel.getServerRootPath().get());
-                    environmentRepository.save(originalModel);
-                }, () -> {
+                    return environmentRepository.save(originalModel);
+
+                }).orElseGet(() -> {
                     var newEnvironment = new Environment();
                     newEnvironment.setName(viewModel.getName().get());
                     newEnvironment.setGitRootPath(viewModel.getGitRootPath().get());
@@ -38,18 +40,22 @@ public class ProjectPersistanceService {
                     project.getEnvironments().add(newEnvironment);
                     var savedResult = environmentRepository.save(newEnvironment);
                     viewModel.setOriginalModel(savedResult);
+                    return newEnvironment;
                 });
     }
 
     public List<EnvironmentTableComponentModel> getEnvironmentViewModels(Project project) {
-        return project.getEnvironments().stream().map(env -> {
-            return EnvironmentTableComponentModel.builder()
-                    .name(new SimpleStringProperty(env.getName()))
-                    .gitRootPath(new SimpleStringProperty((env.getGitRootPath())))
-                    .serverRootPath(new SimpleStringProperty((env.getServerPath())))
-                    .originalModel(env)
-                    .build();
-        }).collect(Collectors.toList());
+        return Optional.ofNullable(project.getEnvironments())
+            .map(envs -> envs.stream().map(env ->
+                 EnvironmentTableComponentModel.builder()
+                         .name(new SimpleStringProperty(env.getName()))
+                         .gitRootPath(new SimpleStringProperty((env.getGitRootPath())))
+                         .serverRootPath(new SimpleStringProperty((env.getServerPath())))
+                         .originalModel(env)
+                         .build()
+             ).collect(Collectors.toList()))
+            .orElseGet(() -> Collections.emptyList());
+
     }
 
     public void deleteEnvironment(EnvironmentTableComponentModel viewModel) {
