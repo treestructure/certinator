@@ -30,6 +30,7 @@
         <EnvironmentTable fx:id="environmentTable" tableLabel="Environments of the Project" buttonLabel="Add Environment" tableHeight="400"/>
         <HBox spacing="10">
             <JFXButton styleClass="execButton" text="Save Project" onAction="#saveProject"/>
+            <JFXButton styleClass="execButton" text="Delete Project" onAction="#deleteProject"/>
         </HBox>
     </VBox>
 </StackPane>

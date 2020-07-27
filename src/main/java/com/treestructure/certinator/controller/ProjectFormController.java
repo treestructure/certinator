@@ -55,7 +55,7 @@ public class ProjectFormController implements Initializable {
             this.projectTreeService.updateEnvironments();
         });
         environmentTable.saved().subscribe(domainModel -> {
-            var finalEnv = projectPersistanceService.storeEnvironmentFromViewModel(this.viewState.getSelectedProject().getValue(), domainModel);
+            var finalEnv = projectPersistanceService.storeEnvironmentFromViewModel(domainModel);
             this.projectTreeService.updateEnvironments();
         });
     }
@@ -67,4 +67,8 @@ public class ProjectFormController implements Initializable {
     }
 
 
+    public void deleteProject() {
+        repository.delete(this.viewState.getSelectedProject().getValue());
+        projectTreeService.removeProjectFromTree();
+    }
 }

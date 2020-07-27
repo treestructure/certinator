@@ -2,6 +2,7 @@ package com.treestructure.certinator.model;
 
 
 import lombok.Data;
+import lombok.Singular;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,6 +24,7 @@ public class Project {
     private String gitRootPath;
 
     @OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
+    @Singular
     private List<Environment> environments;
 
 

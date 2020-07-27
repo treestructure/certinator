@@ -112,8 +112,9 @@ public class ProjectController implements Initializable {
             StackPane root = fxmlLoader.load();
             formContainer.getChildren().clear();
             formContainer.getChildren().add(root);
-            viewState.getSelectedEnvironment().onNext((Environment) treeModel.getOriginalModel());
-
+            var env = (Environment) treeModel.getOriginalModel();
+            viewState.getSelectedEnvironment().onNext(env);
+            viewState.getSelectedProject().onNext(env.getProject());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package com.treestructure.certinator.service;
 
+import com.treestructure.certinator.controller.ViewState;
 import com.treestructure.certinator.model.Environment;
 import com.treestructure.certinator.model.Project;
 import com.treestructure.certinator.model.ui.EnvironmentTableComponentModel;
@@ -9,6 +10,7 @@ import javafx.beans.property.SimpleStringProperty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -18,12 +20,15 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProjectPersistanceService {
 
-
+    private final ViewState viewState;
     private final ProjectRepository projectRepository;
 
     private final EnvironmentRepository environmentRepository;
 
-    public Environment storeEnvironmentFromViewModel(Project project, EnvironmentTableComponentModel viewModel) {
+    public Environment storeEnvironmentFromViewModel(EnvironmentTableComponentModel viewModel) {
+
+        var project = viewState.getSelectedProject().getValue();
+
         return Optional.ofNullable(viewModel.getOriginalModel())
                 .map(originalModel -> {
                     originalModel.setName(viewModel.getName().get());
@@ -37,6 +42,9 @@ public class ProjectPersistanceService {
                     newEnvironment.setGitRootPath(viewModel.getGitRootPath().get());
                     newEnvironment.setServerPath(viewModel.getServerRootPath().get());
                     newEnvironment.setProject(project);
+                    newEnvironment.setPasswordStores(new ArrayList<>());
+                    newEnvironment.setKeyStores(new ArrayList<>());
+                    newEnvironment.setDomains(new ArrayList<>());
                     project.getEnvironments().add(newEnvironment);
                     var savedResult = environmentRepository.save(newEnvironment);
                     viewModel.setOriginalModel(savedResult);

@@ -1,6 +1,7 @@
 package com.treestructure.certinator.service;
 
 import com.jfoenix.controls.JFXTreeView;
+import com.treestructure.certinator.controller.ViewState;
 import com.treestructure.certinator.model.Environment;
 import com.treestructure.certinator.model.Project;
 import com.treestructure.certinator.model.ProjectModelType;
@@ -15,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 
 /**
  * responsible for rendering updates of the treeview in
@@ -26,6 +29,8 @@ import org.springframework.stereotype.Service;
 public class ProjectTreeService {
 
     private final ProjectRepository projectRepository;
+
+    private final ViewState viewState;
 
     private JFXTreeView projectTree;
 
@@ -53,6 +58,7 @@ public class ProjectTreeService {
     public void addProjectToTree() {
         var dummyProject = new Project();
         dummyProject.setName("New Project");
+        dummyProject.setEnvironments(new ArrayList<>());
         var dummyToAdd = new TreeItem<ProjectTreeModel>();
         dummyToAdd.setValue(ProjectTreeModel.builder()
                 .displayName(new SimpleStringProperty("New Project"))
@@ -60,6 +66,13 @@ public class ProjectTreeService {
                 .originalModel(dummyProject)
                 .build());
         this.projectTree.getRoot().getChildren().add(dummyToAdd);
+
+        viewState.getSelectedProject().onNext(dummyProject);
+
+    }
+
+    public void removeProjectFromTree() {
+        projectTree.getRoot().getChildren().remove(getSelectedTreeItem());
     }
 
 
