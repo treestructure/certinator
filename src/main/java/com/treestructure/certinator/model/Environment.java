@@ -31,14 +31,14 @@ public class Environment {
     @JoinColumn(name="project_id", nullable = false)
     private Project project;
 
-    @OneToMany(mappedBy = "environment", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "environment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
     List<Domain> domains;
 
     @OneToMany(mappedBy = "environment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<KeyStore> keyStores;
 
-    @OneToMany(mappedBy = "environment", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "environment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
     List<PasswordStore> passwordStores;
 

@@ -72,7 +72,8 @@ public class ProjectTreeService {
     }
 
     public void removeProjectFromTree() {
-        projectTree.getRoot().getChildren().remove(getSelectedTreeItem());
+        projectTree.getRoot().getChildren().remove(selectedTreeItem.getValue());
+        projectRepository.delete(viewState.getSelectedProject().getValue());
     }
 
 

@@ -51,6 +51,7 @@ public class ProjectFormController implements Initializable {
 
     private void bindEnvrionmentTable() {
         environmentTable.deleted().subscribe(viewModel -> {
+            this.viewState.getSelectedProject().getValue().getEnvironments().remove(viewModel.getOriginalModel());
             projectPersistanceService.deleteEnvironment(viewModel);
             this.projectTreeService.updateEnvironments();
         });
@@ -68,7 +69,7 @@ public class ProjectFormController implements Initializable {
 
 
     public void deleteProject() {
-        repository.delete(this.viewState.getSelectedProject().getValue());
+        //projectPersistanceService.deleteProject(viewState.getSelectedProject().getValue());
         projectTreeService.removeProjectFromTree();
     }
 }

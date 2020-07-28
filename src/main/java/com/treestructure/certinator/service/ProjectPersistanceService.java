@@ -69,4 +69,10 @@ public class ProjectPersistanceService {
     public void deleteEnvironment(EnvironmentTableComponentModel viewModel) {
         environmentRepository.delete(viewModel.getOriginalModel());
     }
+
+    public void deleteProject(Project p) {
+        //p.getEnvironments().forEach(e -> environmentRepository.delete(e));
+        projectRepository.delete(p);
+
+    }
 }

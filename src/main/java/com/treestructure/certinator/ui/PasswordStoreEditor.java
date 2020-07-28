@@ -79,10 +79,10 @@ public class PasswordStoreEditor extends VBox {
         saveColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Save", p -> {
             try {
                 this.passwordStoreService.updateEntry(
-                        keyStorePath.getText(),
+                        path,
                         p.getAlias().get(),
                         p.getValue().get(),
-                        keyStorePwd.getText());
+                        password);
             } catch (Exception e) {
                 e.printStackTrace();
             }
