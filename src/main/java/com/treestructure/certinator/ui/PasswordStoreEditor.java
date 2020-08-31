@@ -26,7 +26,7 @@ public class PasswordStoreEditor extends VBox {
     @FXML
     Text keyStorePath;
     @FXML
-    TableView<PasswordStoreTableModel> keyStoreTable;
+    TableView<PasswordStoreTableModel> pwdStoreTable;
     @FXML
     TableColumn<PasswordStoreTableModel, String> aliasColumn;
     @FXML
@@ -69,7 +69,7 @@ public class PasswordStoreEditor extends VBox {
         deleteColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Remove", p -> {
             try {
                 this.passwordStoreService.deleteEntry(keyStorePath.getText(), p.getAlias().get(), keyStorePwd.getText());
-                this.keyStoreTable.getItems().remove(p);
+                this.pwdStoreTable.getItems().remove(p);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -89,10 +89,10 @@ public class PasswordStoreEditor extends VBox {
             return p;
         }));
 
-        keyStoreTable.getColumns().addAll(deleteColumn, saveColumn);
-        keyStoreTable.setEditable(true);
+        pwdStoreTable.getColumns().addAll(deleteColumn, saveColumn);
+        pwdStoreTable.setEditable(true);
 
-        keyStoreTable.prefHeightProperty().bind(rootBox.heightProperty());
+        pwdStoreTable.prefHeightProperty().bind(rootBox.heightProperty());
 
         loadKeystore(path, password);
     }
@@ -107,7 +107,7 @@ public class PasswordStoreEditor extends VBox {
                 model.setValue(new SimpleStringProperty(v));
                 passwordStoreData.add(model);
             });
-            keyStoreTable.setItems(passwordStoreData);
+            pwdStoreTable.setItems(passwordStoreData);
         } catch (Exception e) {
             e.printStackTrace();
         }

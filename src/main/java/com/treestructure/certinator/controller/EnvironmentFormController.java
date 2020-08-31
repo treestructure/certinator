@@ -159,7 +159,8 @@ public class EnvironmentFormController implements Initializable {
             item.getOriginalModel().checkForEquality(keyStoreAnalyzerService);
         });
         keyStoreTable.openInKeystoreEditorClicked().subscribe(item -> {
-
+            var keyStoreEditorDialog = dialogBuilder.buildKeyStoreEditorDialog(mainPane, item.getGitPath().getValue(), item.getPassword().getValue());
+            keyStoreEditorDialog.show();
         });
         keyStoreTable.deleted().subscribe(viewModel -> environmentPersistanceService.deleteKeyStore(viewModel));
         keyStoreTable.saved().subscribe(viewModel -> {

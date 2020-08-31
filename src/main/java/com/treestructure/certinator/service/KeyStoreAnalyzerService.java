@@ -10,6 +10,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +18,12 @@ import java.util.Map;
 public class KeyStoreAnalyzerService {
 
 
+    /**
+     *
+     * @param path
+     * @param password
+     * @return
+     */
     public Map<String, X509Certificate> getAllCerts(String path, String password) {
         var result = new HashMap<String, X509Certificate>();
         try {
@@ -33,7 +40,7 @@ public class KeyStoreAnalyzerService {
             return result;
         } catch (IOException | NoSuchAlgorithmException | CertificateException | KeyStoreException e) {
             e.printStackTrace();
-            return null;
+            return Collections.emptyMap();
         }
     }
 

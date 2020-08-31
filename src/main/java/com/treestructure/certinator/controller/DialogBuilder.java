@@ -4,7 +4,9 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
+import com.treestructure.certinator.service.KeyStoreAnalyzerService;
 import com.treestructure.certinator.service.PasswordStoreService;
+import com.treestructure.certinator.ui.KeyStoreEditor;
 import com.treestructure.certinator.ui.PasswordStoreEditor;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.StackPane;
@@ -24,6 +26,9 @@ public class DialogBuilder {
 
     @Autowired
     PasswordStoreService passwordStoreService;
+
+    @Autowired
+    KeyStoreAnalyzerService keyStoreAnalyzerService;
 
     public static JFXDialog build(StackPane pane, String heading, String text) {
         var content = new JFXDialogLayout();
@@ -60,6 +65,23 @@ public class DialogBuilder {
     public JFXDialog buildPwdStoreDialog(StackPane pane, String path, String password) {
 
         var pwdStoreEditor = new PasswordStoreEditor(passwordStoreService, path, password);
+        var content = new JFXDialogLayout();
+
+        content.setBody(pwdStoreEditor);
+        var dialog = new JFXDialog(pane, content,JFXDialog.DialogTransition.TOP);
+        dialog.getStyleClass().add("pwdStoreDialog");
+
+        var button=new JFXButton("X");
+        button.setOnAction(event -> dialog.close());
+        content.setActions(button);
+
+        return dialog;
+    }
+
+
+    public JFXDialog buildKeyStoreEditorDialog(StackPane pane, String path, String password) {
+
+        var pwdStoreEditor = new KeyStoreEditor(keyStoreAnalyzerService, path, password);
         var content = new JFXDialogLayout();
 
         content.setBody(pwdStoreEditor);

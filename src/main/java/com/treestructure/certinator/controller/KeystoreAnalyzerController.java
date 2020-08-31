@@ -87,8 +87,6 @@ public class KeystoreAnalyzerController implements Initializable {
             } catch (InvalidNameException e) {
                 e.printStackTrace();
             }
-
-
         });
         keyStoreTable.setItems(keyStoreData);
     }

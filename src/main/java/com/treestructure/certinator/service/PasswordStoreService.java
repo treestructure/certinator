@@ -20,7 +20,6 @@ import java.util.Map;
 @Slf4j
 public class PasswordStoreService {
 
-
     /**
      *
      * @param path

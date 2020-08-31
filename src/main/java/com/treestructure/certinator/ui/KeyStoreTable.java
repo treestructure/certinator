@@ -84,8 +84,8 @@ public class KeyStoreTable extends CrudTable<StoreTableComponentModel> {
             return p;
         }));
 
-        var openInKeyStoreEditorColumn = new TableColumn<StoreTableComponentModel, FontAwesomeIcon>("Check Outdated");
-        openInKeyStoreEditorColumn.setCellFactory(ActionIconTableCell.forTableColumn("BOMB", p -> {
+        var openInKeyStoreEditorColumn = new TableColumn<StoreTableComponentModel, FontAwesomeIcon>("Edit Store");
+        openInKeyStoreEditorColumn.setCellFactory(ActionIconTableCell.forTableColumn("EDIT", p -> {
             openInKeyStoreEditorClickedItem.onNext(p);
             return p;
         }));
@@ -104,6 +104,7 @@ public class KeyStoreTable extends CrudTable<StoreTableComponentModel> {
                 .name(new SimpleStringProperty("New Store"))
                 .gitPath(new SimpleStringProperty("NOT SET"))
                 .serverPath(new SimpleStringProperty("NOT SET"))
+                .password(new SimpleStringProperty("NOT SET"))
                 .build());
     }
 
