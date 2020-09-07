@@ -3,12 +3,12 @@ package com.treestructure.certinator.ui;
 import com.jfoenix.controls.JFXPasswordField;
 import com.treestructure.certinator.model.ui.PasswordStoreTableModel;
 import com.treestructure.certinator.service.PasswordStoreService;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -65,18 +65,18 @@ public class PasswordStoreEditor extends VBox {
                 });
 
 
-        var deleteColumn = new TableColumn<PasswordStoreTableModel, Button>(" ");
-        deleteColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Remove", p -> {
+        var deleteColumn = new TableColumn<PasswordStoreTableModel, FontAwesomeIcon>("Delete");
+        deleteColumn.setCellFactory(ActionIconTableCell.forTableColumn("TRASH", p -> {
             try {
-                this.passwordStoreService.deleteEntry(keyStorePath.getText(), p.getAlias().get(), keyStorePwd.getText());
+                this.passwordStoreService.deleteEntry(path, p.getAlias().get(), password);
                 this.pwdStoreTable.getItems().remove(p);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return p;
         }));
-        var saveColumn = new TableColumn<PasswordStoreTableModel, Button>(" ");
-        saveColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Save", p -> {
+        var saveColumn = new TableColumn<PasswordStoreTableModel, FontAwesomeIcon>("Save");
+        saveColumn.setCellFactory(ActionIconTableCell.forTableColumn("SAVE", p -> {
             try {
                 this.passwordStoreService.updateEntry(
                         path,
