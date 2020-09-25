@@ -89,7 +89,7 @@ public class ProjectTreeService {
 
     public void reload() {
         var root = new TreeItem<ProjectTreeModel>();
-        projectRepository.findAll().forEach(proj -> {
+        projectRepository.findAllByOrderByName().forEach(proj -> {
             // add project
             var projNode = TreeViewBuilder.buildTreeItem(ProjectTreeModel
                     .builder()
