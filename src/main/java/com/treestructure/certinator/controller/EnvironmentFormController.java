@@ -21,7 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
+import java.io.File;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -109,6 +111,10 @@ public class EnvironmentFormController implements Initializable {
             FileChooser outputChooser = new FileChooser();
             outputChooser.setTitle("Choose Git Path of Password Store");
 
+            if (!StringUtils.isEmpty(item.getServerPath().get())) {
+                outputChooser.setInitialDirectory(new File(new File(item.getGitPath().getValue()).getParent()));
+            }
+
             Optional.ofNullable(outputChooser.showOpenDialog(null)).ifPresent(selectedPath -> {
                 item.getGitPath().set(selectedPath.toString());
             });
@@ -116,6 +122,12 @@ public class EnvironmentFormController implements Initializable {
         passwordStoreTable.serverPathChanged().subscribe(item -> {
             FileChooser outputChooser = new FileChooser();
             outputChooser.setTitle("Choose Server Path of Password Store");
+            if (!StringUtils.isEmpty(item.getServerPath().get())) {
+                outputChooser.setInitialDirectory(new File(new File(item.getServerPath().getValue()).getParent()));
+            }
+
+
+
 
             Optional.ofNullable(outputChooser.showOpenDialog(null)).ifPresent(selectedPath -> {
                 item.getServerPath().set(selectedPath.toString());
