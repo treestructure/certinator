@@ -121,8 +121,13 @@ public class EnvironmentFormController implements Initializable {
                 item.getServerPath().set(selectedPath.toString());
             });
         });
-        passwordStoreTable.passwordStoreOpened().subscribe(item -> {
+        passwordStoreTable.gitStoreOpened().subscribe(item -> {
             var pwdEditorDialog = dialogBuilder.buildPwdStoreDialog(mainPane, item.getGitPath().getValue(), item.getPassword().getValue());
+            pwdEditorDialog.show();
+        });
+
+        passwordStoreTable.serverStoreOpened().subscribe(item -> {
+            var pwdEditorDialog = dialogBuilder.buildPwdStoreDialog(mainPane, item.getServerPath().getValue(), item.getPassword().getValue());
             pwdEditorDialog.show();
         });
         passwordStoreTable.deleted().subscribe(viewModel -> {
@@ -158,8 +163,13 @@ public class EnvironmentFormController implements Initializable {
         keyStoreTable.syncStatusClicked().subscribe(item -> {
             item.getOriginalModel().checkForEquality(keyStoreAnalyzerService);
         });
-        keyStoreTable.openInKeystoreEditorClicked().subscribe(item -> {
+        keyStoreTable.openGitInKeystoreEditorClicked().subscribe(item -> {
             var keyStoreEditorDialog = dialogBuilder.buildKeyStoreEditorDialog(mainPane, item.getGitPath().getValue(), item.getPassword().getValue());
+            keyStoreEditorDialog.show();
+        });
+
+        keyStoreTable.openServerInKeystoreEditorClicked().subscribe(item -> {
+            var keyStoreEditorDialog = dialogBuilder.buildKeyStoreEditorDialog(mainPane, item.getServerPath().getValue(), item.getPassword().getValue());
             keyStoreEditorDialog.show();
         });
         keyStoreTable.deleted().subscribe(viewModel -> environmentPersistanceService.deleteKeyStore(viewModel));

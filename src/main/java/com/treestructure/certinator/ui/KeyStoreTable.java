@@ -25,7 +25,9 @@ public class KeyStoreTable extends CrudTable<StoreTableComponentModel> {
 
     private BehaviorSubject<StoreTableComponentModel> containsOutdatedClickedItem =  BehaviorSubject.create();
 
-    private BehaviorSubject<StoreTableComponentModel> openInKeyStoreEditorClickedItem =  BehaviorSubject.create();
+    private BehaviorSubject<StoreTableComponentModel> openGitInKeyStoreEditorClickedItem =  BehaviorSubject.create();
+
+    private BehaviorSubject<StoreTableComponentModel> openServerInKeyStoreEditorClickedItem =  BehaviorSubject.create();
 
     /**
      *
@@ -84,15 +86,22 @@ public class KeyStoreTable extends CrudTable<StoreTableComponentModel> {
             return p;
         }));
 
-        var openInKeyStoreEditorColumn = new TableColumn<StoreTableComponentModel, FontAwesomeIcon>("Edit Store");
-        openInKeyStoreEditorColumn.setCellFactory(ActionIconTableCell.forTableColumn("EDIT", p -> {
-            openInKeyStoreEditorClickedItem.onNext(p);
+        var openGitInKeyStoreEditorColumn = new TableColumn<StoreTableComponentModel, FontAwesomeIcon>("");
+        openGitInKeyStoreEditorColumn.setCellFactory(ActionIconTableCell.forTableColumn("EDIT", p -> {
+            openGitInKeyStoreEditorClickedItem.onNext(p);
+            return p;
+        }));
+
+        var openServerInKeyStoreEditorColumn = new TableColumn<StoreTableComponentModel, FontAwesomeIcon>("");
+        openServerInKeyStoreEditorColumn.setCellFactory(ActionIconTableCell.forTableColumn("EDIT", p -> {
+            openServerInKeyStoreEditorClickedItem.onNext(p);
             return p;
         }));
         storeTableView.getColumns().addAll(0, List.of(
-                nameColumn, passwordColumn, gitPathStringColumn, gitPathColumn,
-                serverPathStringColumn, serverPathColumn, syncStatusColumn,
-                containsOutdatedColumn, openInKeyStoreEditorColumn));
+                nameColumn, passwordColumn,
+                gitPathStringColumn, gitPathColumn, openGitInKeyStoreEditorColumn,
+                serverPathStringColumn, serverPathColumn, openServerInKeyStoreEditorColumn,
+                syncStatusColumn, containsOutdatedColumn));
         storeTableView.setItems(storeData);
     }
 
@@ -118,8 +127,12 @@ public class KeyStoreTable extends CrudTable<StoreTableComponentModel> {
     public Observable<StoreTableComponentModel> containsOutdatedClicked() {
         return this.containsOutdatedClickedItem;
     }
-    public Observable<StoreTableComponentModel> openInKeystoreEditorClicked() {
-        return this.openInKeyStoreEditorClickedItem;
+    public Observable<StoreTableComponentModel> openGitInKeystoreEditorClicked() {
+        return this.openGitInKeyStoreEditorClickedItem;
+    }
+
+    public Observable<StoreTableComponentModel> openServerInKeystoreEditorClicked() {
+        return this.openServerInKeyStoreEditorClickedItem;
     }
 
 

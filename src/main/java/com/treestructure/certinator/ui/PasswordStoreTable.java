@@ -13,7 +13,8 @@ import java.util.List;
 public class PasswordStoreTable extends CrudTable<PasswordStoreComponentModel>{
 
 
-    private BehaviorSubject<PasswordStoreComponentModel> openPassWordStoreItem = BehaviorSubject.create();
+    private BehaviorSubject<PasswordStoreComponentModel> openGitItem = BehaviorSubject.create();
+    private BehaviorSubject<PasswordStoreComponentModel> openServerItem = BehaviorSubject.create();
     private BehaviorSubject<PasswordStoreComponentModel> selectGitPathItem =  BehaviorSubject.create();
     private BehaviorSubject<PasswordStoreComponentModel> selectServerPathItem =  BehaviorSubject.create();
 
@@ -22,9 +23,14 @@ public class PasswordStoreTable extends CrudTable<PasswordStoreComponentModel>{
 
         var gitPathStringColumn = new TableColumn<PasswordStoreComponentModel, String>("Path to Git");
         gitPathStringColumn.setCellValueFactory(data -> data.getValue().getGitPath());
+        gitPathStringColumn.setPrefWidth(200);
+        gitPathStringColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
 
         var serverPathStringColumn = new TableColumn<PasswordStoreComponentModel, String>("Path on Server");
         serverPathStringColumn.setCellValueFactory(data -> data.getValue().getServerPath());
+        serverPathStringColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        serverPathStringColumn.setPrefWidth(200);
 
         var nameColumn = new TableColumn<PasswordStoreComponentModel, String>("Name");
         nameColumn.setCellValueFactory(data -> data.getValue().getName());
@@ -44,21 +50,29 @@ public class PasswordStoreTable extends CrudTable<PasswordStoreComponentModel>{
                             t.getTablePosition().getRow()).getPassword().set(t.getNewValue());
                 });
 
-        var gitPathColumn = new TableColumn<PasswordStoreComponentModel, FontAwesomeIcon>("Set Git Path");
+        var gitPathColumn = new TableColumn<PasswordStoreComponentModel, FontAwesomeIcon>("");
         gitPathColumn.setCellFactory(ActionIconTableCell.forTableColumn("FOLDER_OPEN", p -> {
             selectGitPathItem.onNext(p);
             return p;
         }));
 
-        var serverPathColumn = new TableColumn<PasswordStoreComponentModel, FontAwesomeIcon>("Set Server Path");
+
+        var serverPathColumn = new TableColumn<PasswordStoreComponentModel, FontAwesomeIcon>("");
         serverPathColumn.setCellFactory(ActionIconTableCell.forTableColumn("FOLDER_OPEN", p -> {
             selectServerPathItem.onNext(p);
             return p;
         }));
 
-        var openColumn = new TableColumn<PasswordStoreComponentModel, FontAwesomeIcon>("Edit Store");
-        openColumn.setCellFactory(ActionIconTableCell.forTableColumn("EDIT", p -> {
-            openPassWordStoreItem.onNext(p);
+
+        var openGitColumn = new TableColumn<PasswordStoreComponentModel, FontAwesomeIcon>("");
+        openGitColumn.setCellFactory(ActionIconTableCell.forTableColumn("EDIT", p -> {
+            openGitItem.onNext(p);
+            return p;
+        }));
+
+        var openServerColumn = new TableColumn<PasswordStoreComponentModel, FontAwesomeIcon>("");
+        openServerColumn.setCellFactory(ActionIconTableCell.forTableColumn("EDIT", p -> {
+            openServerItem.onNext(p);
             return p;
         }));
 
@@ -67,9 +81,10 @@ public class PasswordStoreTable extends CrudTable<PasswordStoreComponentModel>{
                 passwordColumn,
                 gitPathStringColumn,
                 gitPathColumn,
+                openGitColumn,
                 serverPathStringColumn,
                 serverPathColumn,
-                openColumn));
+                openServerColumn));
         storeTableView.setItems(storeData);
     }
 
@@ -93,7 +108,10 @@ public class PasswordStoreTable extends CrudTable<PasswordStoreComponentModel>{
     public Observable<PasswordStoreComponentModel> serverPathChanged() {
         return this.selectServerPathItem;
     }
-    public Observable<PasswordStoreComponentModel> passwordStoreOpened() {
-        return this.openPassWordStoreItem;
+    public Observable<PasswordStoreComponentModel> gitStoreOpened() {
+        return this.openGitItem;
+    }
+    public Observable<PasswordStoreComponentModel> serverStoreOpened() {
+        return this.openServerItem;
     }
 }
